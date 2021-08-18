@@ -18,7 +18,8 @@ function onInit() {
       addClickListener();
     })
     .catch(() => console.log('Error: cannot init map'));
-    renderLocs()
+  renderLocs();
+  onGetLocsFromUrl();
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -78,9 +79,9 @@ function addClickListener() {
 
 function onClickMap(mapsMouseEvent) {
   let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
-  const name = prompt('Please choose a name')
-  locService.createLocation(name,pos.x,pos.y)
-  renderLocs()
+  const name = prompt('Please choose a name');
+  locService.createLocation(name, pos.x, pos.y);
+  renderLocs();
   console.log(pos);
 }
 
@@ -113,4 +114,18 @@ function onSearch(ev) {
   ev.preventDefault();
   const query = document.querySelector('#search').value;
   mapService.getSearchPosition(query).then(pos => onPanTo(pos));
+}
+
+function onGetLocsFromUrl() {
+  const queryString = window.location.search;
+  console.log(queryString);
+  const urlParams = new URLSearchParams(queryString);
+  const values = urlParams.values();
+  const latLng = [];
+  for (const value of values) {
+    latLng.push(+value);
+  }
+  console.log(latLng[0]);
+  console.log(latLng[1]);
+  onPanTo(latLng[0], latLng[1]);
 }
