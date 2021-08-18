@@ -17,12 +17,14 @@ function onInit() {
     .then(() => {
       addClickListener();
     })
+    onGetLocs()
     .catch(() => console.log('Error: cannot init map'));
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-  console.log('Getting Pos');
+  console.log('Getting Pos'
+  );
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });

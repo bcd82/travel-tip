@@ -6,10 +6,26 @@
     <link rel="stylesheet" href="./css/style.css" />
     <title>TravelTip</title>
   </head>
-
   <body>
-    <h1>TravelTip</h1>
+    <header class="main-layout">
+      <h1>TripTip</h1>
+      <form>
+        <input type="text" id="search" class="btn-search-loc" >
+        <button onclick="onSearch(event)" >Search</button>
+        <form>
+          <input type="text" value="" id="myLoc" hidden/>
+          <button onclick="onCopyLink()" class="btn-copy-link">Copy Link</button>
+        </form>
+      </form>
+    </header>
+    <div class="main-container">
+      <div class="cards-container">
+        <h3>Locations</h3>
+        <div class="cards"></div>
+      </div>
+    </div>
     <div id="map" class="map" style="width: 100%; height: 400px"></div>
+    .buttons
     <button onclick="onAddMarker()" class="btn-add-marker">
       Add Marker Specific Location
     </button>
@@ -18,21 +34,11 @@
     </button>
     <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
     <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
-    <form>
-      <input type="text" value="" id="myLoc" />
-      <button onclick="onCopyLink()" class="btn-copy-link">Copy Link</button>
-    </form>
-    <form>
-      <input type="text" id="search" />
-      <button onclick="onSearch(event)">Search</button>
-    </form>
+
 
     <p>You are at: <span class="user-pos"></span></p>
     <!-- <p>Locations: <span class="cards"></span></p> -->
-    <div class="cards-container">
-      <h3>Locations</h3>
-      <div class="cards"></div>
-    </div>
+  
     <script src="./js/lib/axios.min.js"></script>
     <script type="module" src="js/app.controller.js"></script>
   </body>

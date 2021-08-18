@@ -2,8 +2,8 @@ import {locService} from './loc.service.js'
 import { storageService } from './storage.service.js';
 
 const API_KEY = 'AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ'; //TODO: Enter your API Key
-
-const gSearches = storageService.load('searchDb') || {}
+const KEY = 'searchDb'
+const gSearches = storageService.load(KEY) || {}
 
 export const mapService = {
     initMap,
@@ -73,7 +73,7 @@ function getSearchPosition(query) {
         .then(res => res.data) 
         .then((data) => {
             gSearches[query] = data;
-            storageService.save('searchDb',gSearches)
+            storageService.save(KEY,gSearches)
             const pos = data.results[0].geometry.location
             return pos  
         })
