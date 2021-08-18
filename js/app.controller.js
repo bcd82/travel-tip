@@ -94,10 +94,13 @@ function onClickMap(mapsMouseEvent) {
   const name = prompt('Please choose a name');
   renderLocs();
   console.log(pos);
-  onGetWeather(pos.lat, pos.lng).then(weather => {
-    locService.createLocation(name, pos.lat, pos.lng, weather);
-  });
-  renderWeather(name);
+  onGetWeather(pos.lat, pos.lng)
+    .then(weather => {
+      locService.createLocation(name, pos.lat, pos.lng, weather);
+      return weather.name;
+    })
+    .then(name => renderWeather(name));
+  //   renderWeather(name);
   //   if(!name) return
   //   locService.createLocation(name, pos.lat, pos.lng);
   //   renderLocs();
@@ -153,18 +156,20 @@ function onGetWeather(lat, lng) {
 }
 
 function renderWeather(name) {
+  console.log(name);
   locService.getLocs().then(locs => {
-    const strHTML = locs.filter(loc => {
-      if (loc.name === name)
+    const strHTML = locs.map(loc => {
+      console.log(loc);
+      if (loc.weather.name === name)
         return `<h3>${loc.weather.country}</h3>
             <h4>${loc.weather.name}</h4>
             <h5>${loc.weather.temp}</h5>
             <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
             `;
     });
-  });
 
-  document.querySelector('.weather-container').innerHTML = strHTML;
+    document.querySelector('.weather-container').innerHTML = strHTML;
+  });
 }
 
 function renderPosition(name) {

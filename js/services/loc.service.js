@@ -9,13 +9,7 @@ export const locService = {
 const KEY = 'locationDB';
 // const locs = storageService.load(KEY) || [];
 
-const locs = storageService.load(KEY) || [
-  {
-    name: 'Greatplace',
-    lat: 32.047104,
-    lng: 34.832384,
-  },
-];
+const locs = storageService.load(KEY) || [];
 
 function createLocation(name, lat, lng, weather = '', updateAt = null) {
   locs.push({
