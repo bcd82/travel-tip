@@ -167,16 +167,24 @@ function renderWeather(name, isSearch = false) {
   let strHTML = '';
   if (!isSearch) {
     locService.getLocs().then(locs => {
-      strHTML = locs.map(loc => {
+    //   strHTML = locs.map(loc => {
+    //     console.log(loc);
+    //     if (loc.weather.name === name)
+    //       return `<h3>${loc.weather.country}</h3>
+    //             <h4>${loc.weather.name}</h4>
+    //             <h5>${loc.weather.temp}</h5>
+    //             <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
+    //             `;
+    //   }
+    //   )
+            const loc = locs.find(loc => loc.weather.name === name)
         console.log(loc);
-        if (loc.weather.name === name)
-          return `<h3>${loc.weather.country}</h3>
+          strHTML =  `<h3>${loc.weather.country}</h3>
                 <h4>${loc.weather.name}</h4>
                 <h5>${loc.weather.temp}</h5>
                 <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
                 `;
-      });
-      document.querySelector('.weather-container').innerHTML = strHTML[0];
+      document.querySelector('.weather-container').innerHTML = strHTML;
     });
   } else {
     strHTML = `<h3>${name.country}</h3>
