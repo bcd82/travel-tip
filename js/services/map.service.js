@@ -1,9 +1,5 @@
-import {
-    locService
-} from './loc.service.js'
-import {
-    storageService
-} from './storage.service.js';
+
+import {storageService} from './storage.service.js';
 
 const API_KEY = 'AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ'; //TODO: Enter your API Key
 const KEY = 'searchDb'
