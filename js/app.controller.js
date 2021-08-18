@@ -70,7 +70,13 @@ function onGetUserPos() {
 
 function onPanTo(lat = 35.6895, lng = 139.6917) {
   console.log('Panning the Map');
-  mapService.panTo(lat, lng);
+  mapService.panTo(lat, lng)
+  .then((pos)=> 
+   mapService.getAddressFromPos(pos.lat,pos.lng)
+    .then(name => {
+        renderPosition(name)
+    })
+  )
 }
 
 function addClickListener() {
@@ -81,6 +87,7 @@ function addClickListener() {
 function onClickMap(mapsMouseEvent) {
   let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
   const name = prompt('Please choose a name');
+  if(!name) return
   locService.createLocation(name, pos.lat, pos.lng);
   renderLocs();
   console.log(pos);
@@ -129,4 +136,9 @@ function onGetLocsFromUrl() {
     latLng.push(+value);
   }
   return latLng;
+}
+
+function renderPosition(name){  
+    console.log(name)
+    document.querySelector('.user-pos').innerText = name
 }
