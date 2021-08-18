@@ -26,7 +26,6 @@ function onInit() {
     })
     .catch(() => console.log('Error: cannot init map'));
   renderLocs();
-  onGetWeather(32.0749831, 34.9120554);
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -91,16 +90,16 @@ function addClickListener() {
 function onClickMap(mapsMouseEvent) {
   let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
   const name = prompt('Please choose a name');
-
   onGetWeather(pos.lat, pos.lng)
     .then(weather => {
       locService.createLocation(name, pos.lat, pos.lng, weather);
       return weather.name;
     })
     .then(name => {
-        renderWeather(name)
-        renderLocs();
+      renderWeather(name);
+      renderLocs();
     });
+
   //   renderWeather(name);
   //   if(!name) return
   //   locService.createLocation(name, pos.lat, pos.lng);
@@ -137,7 +136,14 @@ function onCopyLink(ev) {
 function onSearch(ev) {
   ev.preventDefault();
   const query = document.querySelector('#search').value;
-  mapService.getSearchPosition(query).then(pos => onPanTo(pos.lat, pos.lng));
+  mapService
+    .getSearchPosition(query)
+    .then(pos => {
+      onPanTo(pos.lat, pos.lng);
+      return pos;
+    })
+    .then(pos => weatherService.getWeather(pos.lat, pos.lng))
+    .then(weather => renderWeather(weather, true));
 }
 
 function onGetLocsFromUrl() {
@@ -156,21 +162,30 @@ function onGetWeather(lat, lng) {
   return weatherService.getWeather(lat, lng);
 }
 
-function renderWeather(name) {
+function renderWeather(name, isSearch = false) {
   console.log(name);
-  locService.getLocs().then(locs => {
-    const strHTML = locs.map(loc => {
-      console.log(loc);
-      if (loc.weather.name === name)
-        return `<h3>${loc.weather.country}</h3>
-            <h4>${loc.weather.name}</h4>
-            <h5>${loc.weather.temp}</h5>
-            <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
-            `;
+  let strHTML = '';
+  if (!isSearch) {
+    locService.getLocs().then(locs => {
+      strHTML = locs.map(loc => {
+        console.log(loc);
+        if (loc.weather.name === name)
+          return `<h3>${loc.weather.country}</h3>
+                <h4>${loc.weather.name}</h4>
+                <h5>${loc.weather.temp}</h5>
+                <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
+                `;
+      });
+      document.querySelector('.weather-container').innerHTML = strHTML;
     });
-
-    document.querySelector('.weather-container').innerHTML = strHTML.join('');
-  });
+  } else {
+    strHTML = `<h3>${name.country}</h3>
+    <h4>${name.name}</h4>
+    <h5>${name.temp}</h5>
+    <img src="http://openweathermap.org/img/w/${name.icon}.png"
+    `;
+    document.querySelector('.weather-container').innerHTML = strHTML;
+  }
 }
 
 function renderPosition(name) {
