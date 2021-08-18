@@ -8,11 +8,8 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onDeleteLoc = onDeleteLoc;
 window.onGoLoc = onGoLoc;
-<<<<<<< HEAD
 window.onCopyLink = onCopyLink;
-=======
 window.onSearch = onSearch;
->>>>>>> e2e86dcb376197dc3b2356cae590612e3e2fa3c2
 
 function onInit() {
   mapService
@@ -97,18 +94,15 @@ function onGoLoc(elBtn) {
   });
 }
 
-<<<<<<< HEAD
 function onCopyLink() {
   getPosition().then(position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
   });
-=======
+}
+
 function onSearch(ev) {
-    ev.preventDefault()
-    const query = document.querySelector('#search').value;
-    mapService.getSearchPosition(query)
-    .then(pos => onPanTo(pos))
-    
->>>>>>> e2e86dcb376197dc3b2356cae590612e3e2fa3c2
+  ev.preventDefault();
+  const query = document.querySelector('#search').value;
+  mapService.getSearchPosition(query).then(pos => onPanTo(pos));
 }
