@@ -143,19 +143,16 @@ function onGetWeather(lat, lng) {
 }
 
 function renderWeather(name) {
-  locService
-    .getLocs()
-    .then(locs => {
-      const strHTML = locs.filter(loc => {
-        if (loc.name === name)
-          return `<h3>${loc}</h3>
+  locService.getLocs().then(locs => {
+    const strHTML = locs.filter(loc => {
+      if (loc.name === name)
+        return `<h3>${loc.weather.country}</h3>
             <h4>${loc}</h4>
             <h5>${loc}</h5>
             <img src="http://openweathermap.org/img/w/${loc}.png"
             `;
-      });
-    })
-    .join('');
+    });
+  });
 
   document.querySelector('.weather-container').innerHTML = strHTML;
 }
