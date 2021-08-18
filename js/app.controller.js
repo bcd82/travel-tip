@@ -12,7 +12,6 @@ window.onCopyLink = onCopyLink;
 window.onSearch = onSearch;
 
 function onInit() {
-<<<<<<< HEAD
   mapService
     .initMap()
     .then(() => {
@@ -20,12 +19,6 @@ function onInit() {
     })
     .catch(() => console.log('Error: cannot init map'));
     onGetLocs()
-=======
-  mapService.initMap().then(() => {
-    addClickListener();
-  });
-  onGetLocs().catch(() => console.log('Error: cannot init map'));
->>>>>>> c944566f79f97ed4aaa8145aefc4553b348fefbb
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -103,11 +96,7 @@ function onGoLoc(elBtn) {
 }
 
 function onCopyLink(ev) {
-<<<<<<< HEAD
-    ev.preventDefault()
-=======
   ev.preventDefault();
->>>>>>> c944566f79f97ed4aaa8145aefc4553b348fefbb
   getPosition().then(position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
