@@ -70,7 +70,12 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
 
 function addClickListener() {
   const map = mapService.getMap();
-  map.addListener('click', mapService.getLocation);
+  map.addListener('click', onGetLocation);
+}
+
+function onGetLocation(mapsMouseEvent)  {
+    let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
+    console.log(pos)
 }
 
 function onDeleteLoc(elBtn) {
