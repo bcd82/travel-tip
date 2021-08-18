@@ -182,7 +182,7 @@ function renderWeather(name, isSearch = false) {
           strHTML =  `<h3>${loc.weather.country}</h3>
                 <h4>${loc.weather.name}</h4>
                 <h5>${loc.weather.temp}</h5>
-                <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
+                <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png">
                 `;
       document.querySelector('.weather-container').innerHTML = strHTML;
     });
@@ -190,7 +190,7 @@ function renderWeather(name, isSearch = false) {
     strHTML = `<h3>${name.country}</h3>
     <h4>${name.name}</h4>
     <h5>${name.temp}</h5>
-    <img src="http://openweathermap.org/img/w/${name.icon}.png"
+    <img src="http://openweathermap.org/img/w/${name.icon}.png">
     `;
     document.querySelector('.weather-container').innerHTML = strHTML;
   }

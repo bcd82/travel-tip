@@ -20,6 +20,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 }
 
 header button {
@@ -128,3 +129,4 @@ body > h2 {
 .flex {
     display: flex;
 }
+
