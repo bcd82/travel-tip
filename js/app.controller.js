@@ -99,11 +99,6 @@ function onClickMap(mapsMouseEvent) {
       renderWeather(name);
       renderLocs();
     });
-
-  //   renderWeather(name);
-  //   if(!name) return
-  //   locService.createLocation(name, pos.lat, pos.lng);
-  //   renderLocs();
 }
 
 function onDeleteLoc(elBtn) {
@@ -115,9 +110,14 @@ function onDeleteLoc(elBtn) {
 }
 
 function onGoLoc(elBtn) {
-  locService.getLocs().then(locs => {
-    onPanTo(locs[elBtn.classList[0]].lat, locs[elBtn.classList[0]].lng);
-  });
+  locService
+    .getLocs()
+    .then(locs => {
+      console.log(locs[elBtn.classList[0]]);
+      onPanTo(locs[elBtn.classList[0]].lat, locs[elBtn.classList[0]].lng);
+      return locs[elBtn.classList[0]].weather.name;
+    })
+    .then(name => renderWeather(name));
 }
 
 function onCopyLink(ev) {
