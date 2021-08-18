@@ -53,9 +53,33 @@ header .btn-search-loc {
     width:40%;
 }
 .weather-container { 
-    height:400px;
+    height:380px;
     outline:1px solid gray;
     background-color:rgba(255, 255, 255, 0.514);
+    flex-direction: column;
+    align-items: center;
+
+}
+.weather-container h3 {
+    font-size:2rem;
+    order:2;
+    margin:0;
+    flex-grow:1;
+}
+.weather-container h4 {
+    font-size:2.5rem;
+    order:1;
+    margin-bottom:20px;
+}
+.weather-container h5 {
+    font-size:2rem;
+    order:3;
+    justify-self: flex-end;
+
+   
+}
+.weather-container h5::after {
+    content: " °C"
 }
 .cards-container {
     width: 100%;
