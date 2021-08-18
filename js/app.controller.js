@@ -12,14 +12,14 @@ window.onCopyLink = onCopyLink;
 window.onSearch = onSearch;
 
 function onInit() {
+  const locsUrl = onGetLocsFromUrl();
   mapService
-    .initMap()
+    .initMap(locsUrl[0], locsUrl[1])
     .then(() => {
       addClickListener();
     })
     .catch(() => console.log('Error: cannot init map'));
   renderLocs();
-  onGetLocsFromUrl();
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -124,6 +124,7 @@ function onGetLocsFromUrl() {
   for (const value of values) {
     latLng.push(+value);
   }
+  return latLng;
   console.log(latLng[0]);
   console.log(latLng[1]);
   onPanTo(latLng[0], latLng[1]);
