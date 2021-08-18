@@ -38,13 +38,13 @@ function onGetLocs() {
   locService.getLocs().then(locs => {
     console.log('Locations:', locs);
     const strHTMLs = locs
-      .map(loc => {
+      .map((loc, idx) => {
         return `
                 <div class="card">
                 <h3></h3>
                 <p>${loc.lat},\n${loc.lng}</p>
-                <button class="${loc.name}" onclick="onGoLoc(this)">Go</button>
-                <button class="${loc.name}" onclick="onDeleteLoc(this)">Delete</button>
+                <button class="${idx}" onclick="onGoLoc(this)">Go</button>
+                <button class="${idx}" onclick="onDeleteLoc(this)">Delete</button>
                 </div>
                 `;
       })
@@ -80,11 +80,7 @@ function onGetLocation(mapsMouseEvent)  {
 
 function onDeleteLoc(elBtn) {
   locService.getLocs().then(locs => {
-    locs.forEach((loc, idx) => {
-      if (loc.name === elBtn.classList[0]) {
-        locs.splice(idx, 1);
-      }
-    });
+    locs.splice(elBtn.classList[0], 1);
     storageService.save('locationDB', locs);
     onGetLocs();
   });
@@ -92,10 +88,6 @@ function onDeleteLoc(elBtn) {
 
 function onGoLoc(elBtn) {
   locService.getLocs().then(locs => {
-    locs.forEach(loc => {
-      if (loc.name === elBtn.classList[0]) {
-        onPanTo(loc.lat, loc.lng);
-      }
-    });
+    onPanTo(locs[elBtn.classList[0]].lat, locs[elBtn.classList[0]].lng);
   });
 }
