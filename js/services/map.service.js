@@ -16,7 +16,7 @@ export const mapService = {
     panTo,
     getMap,
     getSearchPosition,
-    getAddressFromPos
+    getCityFromPos
 }
 
 var gMap;
@@ -58,7 +58,6 @@ function addMarker(loc) {
 function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
-    getAddressFromPos(lat,lng)
     return Promise.resolve({lat,lng})
 }
 
@@ -90,7 +89,7 @@ function getSearchPosition(query) {
 
 }
 
-function getAddressFromPos(lat,lng) {
+function getCityFromPos(lat,lng) {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`
     return axios.get(url)
         .then(res => res.data) 

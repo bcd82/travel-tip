@@ -72,7 +72,7 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
   console.log('Panning the Map');
   mapService.panTo(lat, lng)
   .then((pos)=> 
-   mapService.getAddressFromPos(pos.lat,pos.lng)
+   mapService.getCityFromPos(pos.lat,pos.lng)
     .then(name => {
         renderPosition(name)
     })
