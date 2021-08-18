@@ -176,7 +176,7 @@ function renderWeather(name, isSearch = false) {
                 <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
                 `;
       });
-      document.querySelector('.weather-container').innerHTML = strHTML;
+      document.querySelector('.weather-container').innerHTML = strHTML[0];
     });
   } else {
     strHTML = `<h3>${name.country}</h3>
