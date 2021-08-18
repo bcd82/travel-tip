@@ -45,8 +45,7 @@ function renderLocs() {
       .map((loc, idx) => {
         return `
                 <div class="card">
-                <h3></h3>
-                <p>${loc.name}</p>
+                <h3>${loc.name}</h3>
                 <button class="${idx}" onclick="onGoLoc(this)">Go</button>
                 <button class="${idx}" onclick="onDeleteLoc(this)">Delete</button>
                 </div>
