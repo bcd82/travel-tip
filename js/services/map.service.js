@@ -42,7 +42,7 @@ function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
     const API_KEY = ''; //TODO: Enter your API Key
     var elGoogleApi = document.createElement('script');
-    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
+    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
 
