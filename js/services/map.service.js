@@ -22,6 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     zoom: 15
                 })
             console.log('Map!', gMap);
+            addClickListener()
         })
 }
 
@@ -55,4 +56,16 @@ function _connectGoogleApi() {
     elGoogleApi.onload = resolve;
     elGoogleApi.onerror = () => reject('Google script failed to load');
   });
+}
+
+const addClickListener = () => {
+    const map = gMap
+    map.addListener("click", (mapsMouseEvent) => {
+        let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
+        console.log(pos)
+        // const name = prompt('name the place')
+        // createPlace(name, pos)
+        // showModal(pos)
+        // renderPlaces()
+    });
 }
