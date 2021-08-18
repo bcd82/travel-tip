@@ -50,12 +50,14 @@ header .btn-search-loc {
     gap:20px;
 }
 .aside { 
-    width:40%;
+    flex-direction: column;
+    gap:20px;
+    width:400px;
 }
 .weather-container { 
     height:380px;
-    outline:1px solid gray;
-    background-color:rgba(255, 255, 255, 0.514);
+    outline:2px solid rgba(128, 128, 128, 0.164);
+    background-color:rgba(255, 255, 255, 0.226);
     flex-direction: column;
     align-items: center;
 
@@ -87,10 +89,16 @@ header .btn-search-loc {
     align-items: flex-start;; 
     background-color:rgba(255, 255, 255, 0.349);
     padding:10px 20px;
-
+    height:400px;
+    overflow-y: scroll;
+    outline:3px solid rgba(128, 128, 128, 0.164);
 }
-
+body > h2 { 
+    position:relative;
+    top:-20px;
+}
 .card {
+    
     display: flex;
     width:300px;
     justify-content: space-between;
@@ -111,6 +119,9 @@ header .btn-search-loc {
     color:white;
     border:1px solid white;
     border-radius: 5px;
+}
+.map { 
+    height: 750px !important;
 }
 
 .flex {
