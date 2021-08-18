@@ -65,7 +65,6 @@ function _connectGoogleApi() {
   });
 }
 
-
 function getSearchPosition(query) {
     if(gSearches[query]) return Promise.resolve(gSearches[query].results[0].geometry.location)
     console.log('getting from api')
