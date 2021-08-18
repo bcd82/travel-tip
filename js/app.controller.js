@@ -11,6 +11,8 @@ window.onGoLoc = onGoLoc;
 window.onCopyLink = onCopyLink;
 window.onSearch = onSearch;
 
+let isCopyLink = false;
+
 function onInit() {
   const locsUrl = onGetLocsFromUrl();
   mapService
@@ -100,6 +102,8 @@ function onGoLoc(elBtn) {
 
 function onCopyLink(ev) {
   ev.preventDefault();
+  if (isCopyLink) return;
+  isCopyLink = true;
   getPosition().then(position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
@@ -125,7 +129,4 @@ function onGetLocsFromUrl() {
     latLng.push(+value);
   }
   return latLng;
-  console.log(latLng[0]);
-  console.log(latLng[1]);
-  onPanTo(latLng[0], latLng[1]);
 }
