@@ -4,7 +4,7 @@ import { storageService } from './services/storage.service.js';
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
-window.onGetLocs = onGetLocs;
+window.renderLocs = renderLocs;
 window.onGetUserPos = onGetUserPos;
 window.onDeleteLoc = onDeleteLoc;
 window.onGoLoc = onGoLoc;
@@ -18,7 +18,7 @@ function onInit() {
       addClickListener();
     })
     .catch(() => console.log('Error: cannot init map'));
-    onGetLocs()
+    renderLocs()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -37,7 +37,7 @@ function onAddMarker() {
   });
 }
 
-function onGetLocs() {
+function renderLocs() {
   locService.getLocs().then(locs => {
     console.log('Locations:', locs);
     const strHTMLs = locs
@@ -45,7 +45,7 @@ function onGetLocs() {
         return `
                 <div class="card">
                 <h3></h3>
-                <p>${loc.lat},\n${loc.lng}</p>
+                <p>${loc.name}</p>
                 <button class="${idx}" onclick="onGoLoc(this)">Go</button>
                 <button class="${idx}" onclick="onDeleteLoc(this)">Delete</button>
                 </div>
@@ -73,11 +73,14 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
 
 function addClickListener() {
   const map = mapService.getMap();
-  map.addListener('click', onGetLocation);
+  map.addListener('click', onClickMap);
 }
 
-function onGetLocation(mapsMouseEvent) {
+function onClickMap(mapsMouseEvent) {
   let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
+  const name = prompt('Please choose a name')
+  locService.createLocation(name,pos.x,pos.y)
+  renderLocs()
   console.log(pos);
 }
 
@@ -85,7 +88,7 @@ function onDeleteLoc(elBtn) {
   locService.getLocs().then(locs => {
     locs.splice(elBtn.classList[0], 1);
     storageService.save('locationDB', locs);
-    onGetLocs();
+    renderLocs();
   });
 }
 
