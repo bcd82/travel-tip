@@ -11,7 +11,7 @@ const KEY = 'locationDB';
 
 const locs = storageService.load(KEY) || [];
 
-function createLocation(name, lat, lng, weather = '', updateAt = null) {
+function createLocation(name, lat, lng, weather, updateAt = null) {
   locs.push({
     id: utilService.makeId(),
     name,
