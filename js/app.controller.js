@@ -8,6 +8,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onDeleteLoc = onDeleteLoc;
 window.onGoLoc = onGoLoc;
+window.onSearch = onSearch;
 
 function onInit() {
   mapService
@@ -90,4 +91,12 @@ function onGoLoc(elBtn) {
   locService.getLocs().then(locs => {
     onPanTo(locs[elBtn.classList[0]].lat, locs[elBtn.classList[0]].lng);
   });
+}
+
+function onSearch(ev) {
+    ev.preventDefault()
+    const query = document.querySelector('#search').value;
+    mapService.getSearchPosition(query)
+    .then(pos => onPanTo(pos))
+    
 }
