@@ -1,12 +1,17 @@
+import {locService} from './loc.service.js'
+
 export const mapService = {
     initMap,
     addMarker,
     panTo,
-    getMap
+    getMap,
+    getUserPos
 }
+
 
 var gMap;
 
+window.mapService = mapService;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
@@ -60,12 +65,23 @@ function _connectGoogleApi() {
 
 const addClickListener = () => {
     const map = gMap
-    map.addListener("click", (mapsMouseEvent) => {
-        let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
-        console.log(pos)
-        // const name = prompt('name the place')
-        // createPlace(name, pos)
-        // showModal(pos)
-        // renderPlaces()
-    });
+    map.addListener("click", getLocation);
+}
+
+const getLocation =  (mapsMouseEvent) => {
+    let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
+    console.log(pos)
+}
+
+function getUserPos  ()  {
+    if (navigator.geolocation) {
+        let userPos = {}
+        navigator.geolocation.getCurrentPosition((position)=>{
+            const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }
+            panTo(pos)
+        });
+    }
 }
