@@ -14,7 +14,7 @@ const locs = [
   { name: 'Neveragain', lat: 32.047201, lng: 34.832581 },
 ];
 
-function createLocation(name, lat, lng, weather, updateAt = null) {
+function createLocation(name, lat, lng, weather = '', updateAt = null) {
   locs.push({
     id: utilService.makeId(),
     name,
@@ -28,11 +28,7 @@ function createLocation(name, lat, lng, weather, updateAt = null) {
 }
 
 function getLocs() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(locs);
-    }, 100);
-  });
+  return new Promise((resolve, reject) => {resolve(locs)});
 }
 
 function getCurrTime() {

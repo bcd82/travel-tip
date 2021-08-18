@@ -80,7 +80,7 @@ function addClickListener() {
 function onClickMap(mapsMouseEvent) {
   let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
   const name = prompt('Please choose a name');
-  locService.createLocation(name, pos.x, pos.y);
+  locService.createLocation(name, pos.lat, pos.lng);
   renderLocs();
   console.log(pos);
 }
