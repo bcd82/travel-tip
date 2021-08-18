@@ -28,7 +28,9 @@ function createLocation(name, lat, lng, weather = '', updateAt = null) {
 }
 
 function getLocs() {
-  return new Promise((resolve, reject) => {resolve(locs)});
+  return new Promise((resolve, reject) => {
+    resolve(locs);
+  });
 }
 
 function getCurrTime() {

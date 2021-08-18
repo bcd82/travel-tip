@@ -1,6 +1,8 @@
 import { locService } from './services/loc.service.js';
 import { mapService } from './services/map.service.js';
 import { storageService } from './services/storage.service.js';
+import { weatherService } from './services/weather.service.js';
+
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
@@ -22,6 +24,7 @@ function onInit() {
     })
     .catch(() => console.log('Error: cannot init map'));
   renderLocs();
+  onGetWeather(32.0749831, 34.9120554);
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -82,9 +85,12 @@ function addClickListener() {
 function onClickMap(mapsMouseEvent) {
   let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
   const name = prompt('Please choose a name');
-  locService.createLocation(name, pos.lat, pos.lng);
   renderLocs();
   console.log(pos);
+  onGetWeather(pos.lat, pos.lng).then(weather => {
+    locService.createLocation(name, pos.lat, pos.lng, weather);
+  });
+  renderWeather(name);
 }
 
 function onDeleteLoc(elBtn) {
@@ -130,4 +136,26 @@ function onGetLocsFromUrl() {
     latLng.push(+value);
   }
   return latLng;
+}
+
+function onGetWeather(lat, lng) {
+  return weatherService.getWeather(lat, lng);
+}
+
+function renderWeather(name) {
+  locService
+    .getLocs()
+    .then(locs => {
+      const strHTML = locs.filter(loc => {
+        if (loc.name === name)
+          return `<h3>${loc}</h3>
+            <h4>${loc}</h4>
+            <h5>${loc}</h5>
+            <img src="http://openweathermap.org/img/w/${loc}.png"
+            `;
+      });
+    })
+    .join('');
+
+  document.querySelector('.weather-container').innerHTML = strHTML;
 }
