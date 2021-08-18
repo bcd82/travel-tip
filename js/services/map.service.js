@@ -5,7 +5,7 @@ import {
     storageService
 } from './storage.service.js';
 
-const API_KEY = 'AIzaSyA2s1lBcgcE1tt77bHML4P9QmcGl2oUJBs'; //TODO: Enter your API Key
+const API_KEY = 'AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ'; //TODO: Enter your API Key
 const KEY = 'searchDb'
 
 const gSearches = storageService.load(KEY) || {}
