@@ -89,10 +89,8 @@ function getCityFromPos(lat,lng) {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`
     console.log(lat,lng)
     return axios.get(url)
-        .then(res => {
-            console.log(res.data)
-            return res.data
-        }) 
-        .then(({results}) => { 
-            results[0].address_components[2].long_name})
+        .then(res =>  res.data) 
+        .then(({results}) => {
+            console.log(results)
+            return results[1].formatted_address})
 }
