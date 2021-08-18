@@ -21,6 +21,8 @@ function onInit() {
     .initMap(locsUrl[0], locsUrl[1])
     .then(() => {
       addClickListener();
+      console.log(locsUrl);
+      if (locsUrl[0] === 0) onGetUserPos();
     })
     .catch(() => console.log('Error: cannot init map'));
   renderLocs();
@@ -50,8 +52,7 @@ function renderLocs() {
       .map((loc, idx) => {
         return `
                 <div class="card">
-                <h3></h3>
-                <p>${loc.name}</p>
+                <h3>${loc.name}</h3>
                 <button class="${idx}" onclick="onGoLoc(this)">Go</button>
                 <button class="${idx}" onclick="onDeleteLoc(this)">Delete</button>
                 </div>
@@ -65,8 +66,12 @@ function renderLocs() {
 function onGetUserPos() {
   getPosition()
     .then(position => {
-      mapService.panTo(position.coords.latitude, position.coords.longitude);
+      return mapService.panTo(
+        position.coords.latitude,
+        position.coords.longitude
+      );
     })
+    .then(res => renderPosition(res))
     .catch(err => {
       console.log('err!!!', err);
     });
@@ -74,7 +79,9 @@ function onGetUserPos() {
 
 function onPanTo(lat = 35.6895, lng = 139.6917) {
   console.log('Panning the Map');
-  mapService.panTo(lat, lng);
+  mapService.panTo(lat, lng).then(name => {
+    renderPosition(name);
+  });
 }
 
 function addClickListener() {
@@ -91,6 +98,9 @@ function onClickMap(mapsMouseEvent) {
     locService.createLocation(name, pos.lat, pos.lng, weather);
   });
   renderWeather(name);
+  //   if(!name) return
+  //   locService.createLocation(name, pos.lat, pos.lng);
+  //   renderLocs();
 }
 
 function onDeleteLoc(elBtn) {
@@ -123,7 +133,7 @@ function onCopyLink(ev) {
 function onSearch(ev) {
   ev.preventDefault();
   const query = document.querySelector('#search').value;
-  mapService.getSearchPosition(query).then(pos => onPanTo(pos));
+  mapService.getSearchPosition(query).then(pos => onPanTo(pos.lat, pos.lng));
 }
 
 function onGetLocsFromUrl() {
@@ -155,4 +165,8 @@ function renderWeather(name) {
   });
 
   document.querySelector('.weather-container').innerHTML = strHTML;
+}
+
+function renderPosition(name) {
+  document.querySelector('.user-pos').innerText = name;
 }

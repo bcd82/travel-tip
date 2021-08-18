@@ -1,5 +1,9 @@
-import {locService} from './loc.service.js'
-import { storageService } from './storage.service.js';
+import {
+    locService
+} from './loc.service.js'
+import {
+    storageService
+} from './storage.service.js';
 
 const API_KEY = 'AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ'; //TODO: Enter your API Key
 const KEY = 'searchDb'
@@ -11,7 +15,8 @@ export const mapService = {
     addMarker,
     panTo,
     getMap,
-    getSearchPosition
+    getSearchPosition,
+    getCityFromPos
 }
 
 var gMap;
@@ -31,7 +36,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     },
                     zoom: 15
                 })
-                const geocoder = new google.maps.Geocoder();
             // console.log('Map!', gMap);
         })
 }
@@ -42,44 +46,53 @@ function getMap() {
 };
 
 function addMarker(loc) {
-  var marker = new google.maps.Marker({
-    position: loc,
-    map: gMap,
-    title: 'Hello World!',
-  });
-  return marker;
+    var marker = new google.maps.Marker({
+        position: loc,
+        map: gMap,
+        title: 'Hello World!',
+    });
+    return marker;
 }
 
 function panTo(lat, lng) {
-  var laLatLng = new google.maps.LatLng(lat, lng);
-  gMap.panTo(laLatLng);
+    var laLatLng = new google.maps.LatLng(lat, lng);
+    gMap.panTo(laLatLng);
+    return Promise.resolve(getCityFromPos(lat,lng))
 }
 
 function _connectGoogleApi() {
-  if (window.google) return Promise.resolve();
-  var elGoogleApi = document.createElement('script');
-  elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
-  elGoogleApi.async = true;
-  document.body.append(elGoogleApi);
+    if (window.google) return Promise.resolve();
+    var elGoogleApi = document.createElement('script');
+    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
+    elGoogleApi.async = true;
+    document.body.append(elGoogleApi);
 
-  return new Promise((resolve, reject) => {
-    elGoogleApi.onload = resolve;
-    elGoogleApi.onerror = () => reject('Google script failed to load');
-  });
+    return new Promise((resolve, reject) => {
+        elGoogleApi.onload = resolve;
+        elGoogleApi.onerror = () => reject('Google script failed to load');
+    });
 }
 
 function getSearchPosition(query) {
-    if(gSearches[query]) return Promise.resolve(gSearches[query].results[0].geometry.location)
+    if (gSearches[query]) return Promise.resolve(gSearches[query].results[0].geometry.location)
     console.log('getting from api')
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}k&key=${API_KEY}`
-        return axios.get(url)
-        .then(res => res.data) 
+    return axios.get(url)
+        .then(res => res.data)
         .then((data) => {
             gSearches[query] = data;
-            storageService.save(KEY,gSearches)
+            storageService.save(KEY, gSearches)
             const pos = data.results[0].geometry.location
-            return pos  
+            return pos
         })
-        
+
 }
 
+function getCityFromPos(lat,lng) {
+    // debugger
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`
+    console.log(lat,lng)
+    return axios.get(url)
+        .then(res => res.data) 
+        .then(({results}) =>  results[0].address_components[2].long_name)
+}
