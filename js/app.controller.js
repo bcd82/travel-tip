@@ -98,5 +98,4 @@ function onSearch(ev) {
     const query = document.querySelector('#search').value;
     mapService.getSearchPosition(query)
     .then(pos => onPanTo(pos))
-    
 }
