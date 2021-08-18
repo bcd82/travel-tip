@@ -11,6 +11,7 @@ function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready');
+            addClickListener()
         })
         .catch(() => console.log('Error: cannot init map'));
 }
@@ -50,4 +51,16 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+const addClickListener = () => {
+    const map = getMap()
+    map.addListener("click", (mapsMouseEvent) => {
+        let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
+        console.log(pos)
+        // const name = prompt('name the place')
+        // createPlace(name, pos)
+        // showModal(pos)
+        // renderPlaces()
+    });
 }
