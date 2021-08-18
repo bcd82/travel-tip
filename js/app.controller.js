@@ -147,9 +147,9 @@ function renderWeather(name) {
     const strHTML = locs.filter(loc => {
       if (loc.name === name)
         return `<h3>${loc.weather.country}</h3>
-            <h4>${loc}</h4>
-            <h5>${loc}</h5>
-            <img src="http://openweathermap.org/img/w/${loc}.png"
+            <h4>${loc.weather.name}</h4>
+            <h5>${loc.weather.temp}</h5>
+            <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
             `;
     });
   });
