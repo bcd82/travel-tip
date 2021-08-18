@@ -1,4 +1,5 @@
 import { storageService } from './storage.service.js';
+import { utilService } from './util.service.js';
 
 export const locService = {
   getLocs,
@@ -13,9 +14,9 @@ const locs = storageService.load(KEY) || [];
 //   { name: 'Neveragain', lat: 32.047201, lng: 34.832581 },
 // ];
 
-function createLocation(id, name, lat, lng, weather, updateAt = null) {
+function createLocation(name, lat, lng, weather, updateAt = null) {
   locs.push({
-    id,
+    id: utilService.makeId(),
     name,
     lat,
     lng,
