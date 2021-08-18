@@ -12,6 +12,7 @@ window.onCopyLink = onCopyLink;
 window.onSearch = onSearch;
 
 function onInit() {
+<<<<<<< HEAD
   mapService
     .initMap()
     .then(() => {
@@ -19,12 +20,17 @@ function onInit() {
     })
     .catch(() => console.log('Error: cannot init map'));
     onGetLocs()
+=======
+  mapService.initMap().then(() => {
+    addClickListener();
+  });
+  onGetLocs().catch(() => console.log('Error: cannot init map'));
+>>>>>>> c944566f79f97ed4aaa8145aefc4553b348fefbb
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-  console.log('Getting Pos'
-  );
+  console.log('Getting Pos');
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
@@ -97,16 +103,17 @@ function onGoLoc(elBtn) {
 }
 
 function onCopyLink(ev) {
+<<<<<<< HEAD
     ev.preventDefault()
+=======
+  ev.preventDefault();
+>>>>>>> c944566f79f97ed4aaa8145aefc4553b348fefbb
   getPosition().then(position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
-    let link = document.querySelector('#myLink');
-    link.value = `${document.location.href}index.html?lat=${lat}&lng=${lng}`;
-    link.select();
-    link.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    alert('Copied the text: ' + link.value);
+    navigator.clipboard.writeText(
+      `${document.location.href}index.html?lat=${lat}&lng=${lng}`
+    );
   });
 }
 
