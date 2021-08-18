@@ -17,8 +17,8 @@ function onInit() {
     .then(() => {
       addClickListener();
     })
-    onGetLocs()
     .catch(() => console.log('Error: cannot init map'));
+    onGetLocs()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -96,7 +96,8 @@ function onGoLoc(elBtn) {
   });
 }
 
-function onCopyLink() {
+function onCopyLink(ev) {
+    ev.preventDefault()
   getPosition().then(position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;

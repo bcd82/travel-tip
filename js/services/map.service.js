@@ -3,6 +3,7 @@ import { storageService } from './storage.service.js';
 
 const API_KEY = 'AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ'; //TODO: Enter your API Key
 const KEY = 'searchDb'
+
 const gSearches = storageService.load(KEY) || {}
 
 export const mapService = {
@@ -30,9 +31,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     },
                     zoom: 15
                 })
+                const geocoder = new google.maps.Geocoder();
             // console.log('Map!', gMap);
         })
 }
+
 
 function getMap() {
     return gMap
