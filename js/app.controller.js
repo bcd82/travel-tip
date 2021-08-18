@@ -100,10 +100,9 @@ function onCopyLink() {
     const lng = position.coords.longitude;
   });
 }
-function onSearch(ev) {
-    ev.preventDefault()
-    const query = document.querySelector('#search').value;
-    mapService.getSearchPosition(query)
-    .then(pos => onPanTo(pos))
 
+function onSearch(ev) {
+  ev.preventDefault();
+  const query = document.querySelector('#search').value;
+  mapService.getSearchPosition(query).then(pos => onPanTo(pos));
 }
