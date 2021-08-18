@@ -71,16 +71,3 @@ const getLocation =  (mapsMouseEvent) => {
     let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
     console.log(pos)
 }
-
-function getUserPos  ()  {
-    if (navigator.geolocation) {
-        let userPos = {}
-        navigator.geolocation.getCurrentPosition((position)=>{
-            const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            }
-            panTo(pos)
-        });
-    }
-}
