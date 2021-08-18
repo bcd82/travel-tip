@@ -19,7 +19,8 @@ function onInit() {
     .initMap(locsUrl[0], locsUrl[1])
     .then(() => {
       addClickListener();
-      onGetUserPos()
+      console.log(locsUrl)
+      if(locsUrl[0] === 0 )onGetUserPos()
     })
     .catch(() => console.log('Error: cannot init map'));
   renderLocs();
