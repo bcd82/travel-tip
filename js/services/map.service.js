@@ -7,11 +7,12 @@ export const mapService = {
     addMarker,
     panTo,
     getMap,
+    getSearchPosition
 }
 
 var gMap;
 
-// window.mapService = mapService;
+window.mapService = mapService;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
