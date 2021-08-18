@@ -1,7 +1,6 @@
 import { locService } from './services/loc.service.js';
 import { mapService } from './services/map.service.js';
 import { storageService } from './services/storage.service.js';
-
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
@@ -14,7 +13,7 @@ function onInit() {
   mapService
     .initMap()
     .then(() => {
-      console.log('Map is ready');
+      addClickListener();
     })
     .catch(() => console.log('Error: cannot init map'));
 }
@@ -29,7 +28,10 @@ function getPosition() {
 
 function onAddMarker() {
   console.log('Adding a marker');
-  mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
+  mapService.addMarker({
+    lat: 32.0749831,
+    lng: 34.9120554,
+  });
 }
 
 function onGetLocs() {
@@ -60,9 +62,15 @@ function onGetUserPos() {
       console.log('err!!!', err);
     });
 }
-function onPanTo(lat = 35.6895, lng = 139.6917) {
+
+function onPanTo() {
   console.log('Panning the Map');
-  mapService.panTo(lat, lng);
+  mapService.panTo(35.6895, 139.6917);
+}
+
+function addClickListener() {
+  const map = mapService.getMap();
+  map.addListener('click', mapService.getLocation);
 }
 
 function onDeleteLoc(elBtn) {
@@ -79,7 +87,7 @@ function onDeleteLoc(elBtn) {
 
 function onGoLoc(elBtn) {
   locService.getLocs().then(locs => {
-    locs.forEach((loc, idx) => {
+    locs.forEach(loc => {
       if (loc.name === elBtn.classList[0]) {
         onPanTo(loc.lat, loc.lng);
       }

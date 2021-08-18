@@ -5,8 +5,8 @@ export const mapService = {
     addMarker,
     panTo,
     getMap,
+    getLocation
 }
-
 
 var gMap;
 
@@ -26,7 +26,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     zoom: 15
                 })
             console.log('Map!', gMap);
-            addClickListener()
+            
         })
 }
 
@@ -62,12 +62,8 @@ function _connectGoogleApi() {
   });
 }
 
-const addClickListener = () => {
-    const map = gMap
-    map.addListener("click", getLocation);
-}
 
-const getLocation =  (mapsMouseEvent) => {
+function getLocation (mapsMouseEvent)  {
     let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
     console.log(pos)
 }
