@@ -1,22 +1,14 @@
 export const mapService = {
-<<<<<<< HEAD
     initMap,
     addMarker,
     panTo,
     getMap
 }
-=======
-  initMap,
-  addMarker,
-  panTo,
-};
->>>>>>> 245e2b2249de8cbbcd1ef409b574b3895f26c0e7
 
 var gMap;
 
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-<<<<<<< HEAD
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
@@ -31,17 +23,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 })
             console.log('Map!', gMap);
         })
-=======
-  console.log('InitMap');
-  return _connectGoogleApi().then(() => {
-    console.log('google available');
-    gMap = new google.maps.Map(document.querySelector('#map'), {
-      center: { lat, lng },
-      zoom: 15,
-    });
-    console.log('Map!', gMap);
-  });
->>>>>>> 245e2b2249de8cbbcd1ef409b574b3895f26c0e7
 }
 
 function getMap() {
@@ -62,10 +43,6 @@ function panTo(lat, lng) {
   gMap.panTo(laLatLng);
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 245e2b2249de8cbbcd1ef409b574b3895f26c0e7
 function _connectGoogleApi() {
   if (window.google) return Promise.resolve();
   const API_KEY = 'AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ'; //TODO: Enter your API Key
