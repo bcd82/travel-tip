@@ -100,6 +100,12 @@ function onCopyLink() {
   getPosition().then(position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
+    let link = document.querySelector('#myLink');
+    link.value = `${document.location.href}index.html?lat=${lat}&lng=${lng}`;
+    link.select();
+    link.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    alert('Copied the text: ' + link.value);
   });
 }
 
