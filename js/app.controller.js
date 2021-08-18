@@ -46,7 +46,6 @@ function onAddMarker() {
 
 function renderLocs() {
   locService.getLocs().then(locs => {
-    console.log('Locations:', locs);
     const strHTMLs = locs
       .map((loc, idx) => {
         return `
@@ -91,7 +90,6 @@ function addClickListener() {
 function onClickMap(mapsMouseEvent) {
   let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
   const name = prompt('Please choose a name');
-  console.log(pos);
   onGetWeather(pos.lat, pos.lng)
     .then(weather => {
       locService.createLocation(name, pos.lat, pos.lng, weather);
