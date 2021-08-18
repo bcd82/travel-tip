@@ -14,6 +14,9 @@
         <button onclick="onSearch(event)">Search</button>
         <form>
           <input type="text" value="" id="myLink" hidden />
+          <button onclick="onGetUserPos()" class="btn-user-pos">
+            Get my position
+          </button>
           <button onclick="onCopyLink(event)" class="btn-copy-link">
             Copy Link
           </button>
@@ -34,14 +37,12 @@
       </div>
       <div id="map" class="map" style="width: 100%; height: 400px"></div>
     </div>
-    <!-- 
-    <button onclick="onAddMarker()" class="btn-add-marker">
+    
+    <!-- <button onclick="onAddMarker()" class="btn-add-marker">
       Add Marker Specific Location
-    </button>
-    <button onclick="onGetUserPos()" class="btn-user-pos">
-      Get User Position
-    </button>
-    <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button> -->
+    </button> -->
+
+    <!-- <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button> -->
 
     <script src="./js/lib/axios.min.js"></script>
     <script type="module" src="js/app.controller.js"></script>
