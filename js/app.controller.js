@@ -8,6 +8,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onDeleteLoc = onDeleteLoc;
 window.onGoLoc = onGoLoc;
+window.onCopyLink = onCopyLink;
 window.onSearch = onSearch;
 
 function onInit() {
@@ -74,9 +75,9 @@ function addClickListener() {
   map.addListener('click', onGetLocation);
 }
 
-function onGetLocation(mapsMouseEvent)  {
-    let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng))
-    console.log(pos)
+function onGetLocation(mapsMouseEvent) {
+  let pos = JSON.parse(JSON.stringify(mapsMouseEvent.latLng));
+  console.log(pos);
 }
 
 function onDeleteLoc(elBtn) {
@@ -93,9 +94,16 @@ function onGoLoc(elBtn) {
   });
 }
 
+function onCopyLink() {
+  getPosition().then(position => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+  });
+}
 function onSearch(ev) {
     ev.preventDefault()
     const query = document.querySelector('#search').value;
     mapService.getSearchPosition(query)
     .then(pos => onPanTo(pos))
+
 }
