@@ -24,9 +24,13 @@
       Location: <span class="user-pos"> position</span>
     </h2>
     <div class="main-container main-layout flex">
+      <div class="aside">
+      <div class="weather-container"></div>
+
       <div class="cards-container flex">
         <h3>Locations</h3>
         <div class="cards"></div>
+      </div>
       </div>
       <div id="map" class="map" style="width: 100%; height: 400px"></div>
     </div>
@@ -38,7 +42,6 @@
       Get User Position
     </button>
     <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button> -->
-    <div class="weather-container"></div>
 
     <script src="./js/lib/axios.min.js"></script>
     <script type="module" src="js/app.controller.js"></script>
