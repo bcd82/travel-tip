@@ -19,6 +19,7 @@ function onInit() {
     .initMap(locsUrl[0], locsUrl[1])
     .then(() => {
       addClickListener();
+      onGetUserPos()
     })
     .catch(() => console.log('Error: cannot init map'));
   renderLocs();
@@ -61,8 +62,9 @@ function renderLocs() {
 function onGetUserPos() {
   getPosition()
     .then(position => {
-      mapService.panTo(position.coords.latitude, position.coords.longitude);
+      return mapService.panTo(position.coords.latitude, position.coords.longitude);
     })
+    .then( res => renderPosition(res))
     .catch(err => {
       console.log('err!!!', err);
     });
@@ -71,12 +73,10 @@ function onGetUserPos() {
 function onPanTo(lat = 35.6895, lng = 139.6917) {
   console.log('Panning the Map');
   mapService.panTo(lat, lng)
-  .then((pos)=> 
-   mapService.getCityFromPos(pos.lat,pos.lng)
-    .then(name => {
-        renderPosition(name)
-    })
-  )
+    .then(name =>{
+         renderPosition(name)
+        })
+  
 }
 
 function addClickListener() {
@@ -90,7 +90,6 @@ function onClickMap(mapsMouseEvent) {
   if(!name) return
   locService.createLocation(name, pos.lat, pos.lng);
   renderLocs();
-  console.log(pos);
 }
 
 function onDeleteLoc(elBtn) {
@@ -123,7 +122,7 @@ function onCopyLink(ev) {
 function onSearch(ev) {
   ev.preventDefault();
   const query = document.querySelector('#search').value;
-  mapService.getSearchPosition(query).then(pos => onPanTo(pos));
+  mapService.getSearchPosition(query).then(pos => onPanTo(pos.lat,pos.lng));
 }
 
 function onGetLocsFromUrl() {
@@ -139,6 +138,5 @@ function onGetLocsFromUrl() {
 }
 
 function renderPosition(name){  
-    console.log(name)
     document.querySelector('.user-pos').innerText = name
 }

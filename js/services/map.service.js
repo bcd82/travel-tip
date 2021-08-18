@@ -36,7 +36,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     },
                     zoom: 15
                 })
-            const geocoder = new google.maps.Geocoder();
             // console.log('Map!', gMap);
         })
 }
@@ -58,7 +57,7 @@ function addMarker(loc) {
 function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
-    return Promise.resolve({lat,lng})
+    return Promise.resolve(getCityFromPos(lat,lng))
 }
 
 function _connectGoogleApi() {
@@ -90,7 +89,9 @@ function getSearchPosition(query) {
 }
 
 function getCityFromPos(lat,lng) {
+    // debugger
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`
+    console.log(lat,lng)
     return axios.get(url)
         .then(res => res.data) 
         .then(({results}) =>  results[0].address_components[2].long_name)
