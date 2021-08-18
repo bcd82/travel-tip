@@ -1,6 +1,9 @@
 import {locService} from './loc.service.js'
+import { storageService } from './storage.service.js';
 
 const API_KEY = 'AIzaSyCFyoGS4I6uoOKNtMDd5nLMcv-n8jECKFQ'; //TODO: Enter your API Key
+
+const gSearches = storageService.load('searchDb') || {}
 
 export const mapService = {
     initMap,
@@ -12,7 +15,7 @@ export const mapService = {
 
 var gMap;
 
-window.mapService = mapService;
+// window.mapService = mapService;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
@@ -27,8 +30,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     },
                     zoom: 15
                 })
-            console.log('Map!', gMap);
-            
+            // console.log('Map!', gMap);
         })
 }
 
@@ -63,10 +65,18 @@ function _connectGoogleApi() {
   });
 }
 
-
 function getSearchPosition(query) {
+    if(gSearches[query]) return Promise.resolve(gSearches[query].results[0].geometry.location)
+    console.log('getting from api')
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}k&key=${API_KEY}`
-        axios.get(url)
-        .then(({data}) => {console.log(data)})
+        return axios.get(url)
+        .then(res => res.data) 
+        .then((data) => {
+            gSearches[query] = data;
+            storageService.save('searchDb',gSearches)
+            const pos = data.results[0].geometry.location
+            return pos  
+        })
+        
 }
 
