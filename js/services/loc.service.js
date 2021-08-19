@@ -12,7 +12,7 @@ const KEY = 'locationDB';
 const locs = storageService.load(KEY) || [];
 
 function createLocation(name, lat, lng, weather, updateAt = null) {
-  locs.push({
+  locs.unshift({
     id: utilService.makeId(),
     name,
     lat,

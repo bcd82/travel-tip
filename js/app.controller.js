@@ -13,15 +13,15 @@ window.onGoLoc = onGoLoc;
 window.onCopyLink = onCopyLink;
 window.onSearch = onSearch;
 
-let isCopyLink = false;
+let locsUrl;
 
 function onInit() {
-  const locsUrl = onGetLocsFromUrl();
+  locsUrl = onGetLocsFromUrl();
   mapService
     .initMap(locsUrl[0], locsUrl[1])
     .then(() => {
       addClickListener();
-      console.log(locsUrl);
+      // console.log(locsUrl);
       if (locsUrl[0] === 0) onGetUserPos();
     })
     .catch(() => console.log('Error: cannot init map'));
@@ -30,14 +30,14 @@ function onInit() {
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-  console.log('Getting Pos');
+  // console.log('Getting Pos');
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
 
 function onAddMarker() {
-  console.log('Adding a marker');
+  // console.log('Adding a marker');
   mapService.addMarker({
     lat: 32.0749831,
     lng: 34.9120554,
@@ -76,7 +76,7 @@ function onGetUserPos() {
 }
 
 function onPanTo(lat = 35.6895, lng = 139.6917) {
-  console.log('Panning the Map');
+  // console.log('Panning the Map');
   mapService.panTo(lat, lng).then(name => {
     renderPosition(name);
   });
@@ -113,7 +113,7 @@ function onGoLoc(elBtn) {
   locService
     .getLocs()
     .then(locs => {
-      console.log(locs[elBtn.classList[0]]);
+      // console.log(locs[elBtn.classList[0]]);
       onPanTo(locs[elBtn.classList[0]].lat, locs[elBtn.classList[0]].lng);
       return locs[elBtn.classList[0]].weather.name;
     })
@@ -122,13 +122,11 @@ function onGoLoc(elBtn) {
 
 function onCopyLink(ev) {
   ev.preventDefault();
-  if (isCopyLink) return;
-  isCopyLink = true;
   getPosition().then(position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     navigator.clipboard.writeText(
-      `${document.location.href}index.html?lat=${lat}&lng=${lng}`
+      `https://bcd82.github.io/travel-tip/index.html?lat=${lat}&lng=${lng}`
     );
   });
 }
@@ -147,8 +145,12 @@ function onSearch(ev) {
 }
 
 function onGetLocsFromUrl() {
+  // const param = (new URL(document.loaction)).searchParams
+  // let lat = params.get('lat')
+  // let lng = params.get('lng')
+
   const queryString = window.location.search;
-  console.log(queryString);
+  // console.log(queryString);
   const urlParams = new URLSearchParams(queryString);
   const values = urlParams.values();
   const latLng = [];
@@ -163,23 +165,23 @@ function onGetWeather(lat, lng) {
 }
 
 function renderWeather(name, isSearch = false) {
-  console.log(name);
+  // console.log(name);
   let strHTML = '';
   if (!isSearch) {
     locService.getLocs().then(locs => {
-    //   strHTML = locs.map(loc => {
-    //     console.log(loc);
-    //     if (loc.weather.name === name)
-    //       return `<h3>${loc.weather.country}</h3>
-    //             <h4>${loc.weather.name}</h4>
-    //             <h5>${loc.weather.temp}</h5>
-    //             <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
-    //             `;
-    //   }
-    //   )
-            const loc = locs.find(loc => loc.weather.name === name)
-        console.log(loc);
-          strHTML =  `<h3>${loc.weather.country}</h3>
+      //   strHTML = locs.map(loc => {
+      //     console.log(loc);
+      //     if (loc.weather.name === name)
+      //       return `<h3>${loc.weather.country}</h3>
+      //             <h4>${loc.weather.name}</h4>
+      //             <h5>${loc.weather.temp}</h5>
+      //             <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png"
+      //             `;
+      //   }
+      //   )
+      const loc = locs.find(loc => loc.weather.name === name);
+      // console.log(loc);
+      strHTML = `<h3>${loc.weather.country}</h3>
                 <h4>${loc.weather.name}</h4>
                 <h5>${loc.weather.temp}</h5>
                 <img src="http://openweathermap.org/img/w/${loc.weather.icon}.png">
